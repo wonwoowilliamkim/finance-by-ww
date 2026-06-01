@@ -1,0 +1,32 @@
+# Personal data - never commit
+*.private.md
+reports/*
+!reports/.gitkeep
+
+# MCP server local config (may contain machine-specific paths)
+.mcp.json
+
+# Claude Code local state
+.claude/settings.local.json
+.claude/state/
+
+# Quality reports (Claude-generated, local only)
+quality_reports/
+
+# Anthropic financial-services plugin bundle (large, fetched separately)
+financial-services-main/
+financial-services-main.zip
+
+# Phase scripts (local rebalance outputs)
+_phase*.py
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
