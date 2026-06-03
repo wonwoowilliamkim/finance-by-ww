@@ -19,8 +19,8 @@ folder with its own CLAUDE.md.
 | 명령 | Trigger | 주기 | 목적 | 출력 |
 |------|---------|------|------|------|
 | **리포트** | "리포트" / "오늘 어때" / "[ticker] 어떻게" | 매일 (옵션) | 오늘 무슨 일 — snapshot | §3 daily card |
-| **rebalance** | "rebalance" / "포트 진단" | 월/분기 | 구조적 결함 진단 + diversification | §10 3-phase (diagnostic→long-list→deep dive) |
-| **예측** | "예측" / "outlook" / "전망" | 분기 (또는 큰 변동 후) | 미래 + 익절 strategy | §13 multi-horizon + 익절 rule |
+| **rebalance** | "rebalance" / "포트 진단" | 월/분기 | 구조적 결함 진단 + diversification | §9 3-phase (diagnostic→long-list→deep dive) |
+| **예측** | "예측" / "outlook" / "전망" | 분기 (또는 큰 변동 후) | 미래 + 익절 strategy | §12 multi-horizon + 익절 rule |
 
 이 3개는 각각 다른 시야:
 - **리포트** = 현재 (오늘)
@@ -30,14 +30,14 @@ folder with its own CLAUDE.md.
 세 가지 모두 §3 daily card aesthetic 공유 (한 줄 진단 → 의미 → 표 → risk → Action/Verdict).
 
 추가 보조 명령:
-- §11 decisions.md auto-log (모든 buy/sell/trim 결정 후)
-- §12 pre-mortem (큰 신규 매수 전 자동)
+- §10 decisions.md auto-log (모든 buy/sell/trim 결정 후)
+- §11 pre-mortem (큰 신규 매수 전 자동)
 - "저널 리뷰" (분기 self-correction)
 
 ## 2. Current Holdings (update when positions change)
 
 > **Replace this template with your own holdings.** Real Cluster column
-> uses §10's mapping rules; confirm cluster when adding new tickers.
+> uses §9's mapping rules; confirm cluster when adding new tickers.
 
 | Ticker | Company | Shares | Entry | Position | GICS | Real Cluster |
 |--------|---------|--------|-------|----------|------|--------------|
