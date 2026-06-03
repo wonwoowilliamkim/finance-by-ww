@@ -173,11 +173,18 @@ All cards must have the SAME structure (현가/진입가 → 한 줄 진단 →
 
 ## 5. Data Sources
 
-- **yfinance MCP** (installed in `.mcp.json`) — price, market cap,
-  basic financials, MA, RSI, volume
+- **yfinance MCP** (`.mcp.json`) — quick single-ticker queries in chat
+  (현재 price, market cap, basic financials, MA, RSI, volume).
   - Server: <https://github.com/Alex2Yang97/yahoo-finance-mcp>
-- **WebSearch** — quarterly results, news, catalysts
-- **IR pages / SEC EDGAR** — runway, guidance, 10-Q numbers
+- **Local yfinance** (`pip install yfinance` 또는 `uv pip install yfinance`)
+  — heavy/batch computation 용. Rebalance (§9)의 correlation matrix / beta /
+  stress는 6+ 종목 × 6개월 일별 데이터 + numpy 계산이라 MCP보다 로컬 스크립트가
+  안정적. 또한 subagent는 MCP 못 봄 (§6 #4) → 배치 계산은 항상 local.
+- **WebSearch** — quarterly results, news, catalysts.
+- **IR pages / SEC EDGAR** — runway, guidance, 10-Q numbers.
+
+> Setup note: rebalance/forecast 같은 무거운 계산 전 `pip install yfinance numpy pandas`
+> 확인. 없으면 Claude가 설치 후 진행.
 
 ## 6. Red Lines (project-specific)
 
@@ -525,6 +532,19 @@ Emoji 규칙:
 4. Underwater 종목 별도 "redeploy 고려" 옵션 (결정은 user).
 5. No speculation. yfinance / SEC / dated source.
 6. Phase 1의 9개 항목 다 채워야 함. 누락 시 "데이터 없음" 명시.
+7. **Computation discipline (생성 코드 sanity check)** — rebalance 계산
+   코드는 매 실행 fresh 생성되므로, 다음 검증 통과 후에만 결과 신뢰:
+   - **Beta**: cov/var ddof 통일 — `np.cov` 기본 ddof=1, `np.var` 기본 ddof=0
+     불일치 주의. 반드시 같은 ddof 사용 (`np.var(market, ddof=1)`).
+   - **Beta cross-check**: 계산 beta를 yfinance beta와 비교 — 10배 이상
+     차이나면 코드 의심.
+   - **Correlation matrix**: 대각선 = 1.0 확인 (아니면 정렬 버그).
+   - **Weights**: 합 = 1.0 (±0.01) 확인.
+   - **Beta None-guard**: yfinance `beta`가 None일 수 있음 → fallback (1.0)
+     + 사용 시 명시.
+   - **재실행 안정성**: 숫자가 wildly 다르면 fetch 실패/NaN 처리 의심.
+   - **원칙**: LLM 생성 분석 코드는 검증 없이 믿지 말 것. 1회 sanity check
+     필수.
 
 ## 10. Decision Journal
 
